@@ -1,0 +1,762 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-1111-4222-8333-444455556666",
+    "name": "Mock Offer API",
+    "description": "Коллекция для локального mock-сервера FastAPI.\n\nПеред запуском коллекции запустите сервер:\n\ncd mock-api\n./.venv/bin/python -m uvicorn app:app --reload --port 8000\n\nЗатем выберите окружение «Mock Offer API — Local» и нажмите Run collection.\nВсе запросы используют переменную {{baseUrl}}, поэтому коллекция работает на компьютере любого разработчика.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Успешные запросы",
+      "item": [
+        {
+          "name": "alpha — успешный запрос",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "const requestBody = JSON.parse(pm.request.body.raw);",
+                  "",
+                  "pm.test('Ответ содержит обязательные поля', function () {",
+                  "    pm.expect(response).to.have.property('traceId');",
+                  "    pm.expect(response).to.have.property('userId');",
+                  "    pm.expect(response).to.have.property('timestamp');",
+                  "    pm.expect(response).to.have.property('offers');",
+                  "});",
+                  "",
+                  "pm.test('traceId сгенерирован', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "});",
+                  "",
+                  "pm.test('timestamp в формате UTC ISO 8601', function () {",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});",
+                  "",
+                  "pm.test('userId взят из запроса', function () {",
+                  "    pm.expect(response.userId).to.eql(requestBody.userId);",
+                  "});",
+                  "",
+                  "pm.test('Оффер соответствует контракту', function () {",
+                  "    pm.expect(response.offers).to.be.an('array').with.lengthOf(1);",
+                  "    pm.expect(response.offers[0].details.offerId).to.eql('offer-1');",
+                  "    pm.expect(response.offers[0].details.noticeId).to.eql('notice-1');",
+                  "    pm.expect(response.offers[0].notice).to.eql('Оффер успешен');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"ruleName\": \"rule-1\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "request"
+              ]
+            },
+            "description": "Успешный запрос в тестовую среду alpha."
+          },
+          "response": []
+        },
+        {
+          "name": "beta — успешный запрос",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "const requestBody = JSON.parse(pm.request.body.raw);",
+                  "",
+                  "pm.test('Ответ содержит обязательные поля', function () {",
+                  "    pm.expect(response).to.have.property('traceId');",
+                  "    pm.expect(response).to.have.property('userId');",
+                  "    pm.expect(response).to.have.property('timestamp');",
+                  "    pm.expect(response).to.have.property('offers');",
+                  "});",
+                  "",
+                  "pm.test('traceId сгенерирован', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "});",
+                  "",
+                  "pm.test('timestamp в формате UTC ISO 8601', function () {",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});",
+                  "",
+                  "pm.test('userId взят из запроса', function () {",
+                  "    pm.expect(response.userId).to.eql(requestBody.userId);",
+                  "});",
+                  "",
+                  "pm.test('Оффер соответствует контракту', function () {",
+                  "    pm.expect(response.offers).to.be.an('array').with.lengthOf(1);",
+                  "    pm.expect(response.offers[0].details.offerId).to.eql('offer-1');",
+                  "    pm.expect(response.offers[0].details.noticeId).to.eql('notice-1');",
+                  "    pm.expect(response.offers[0].notice).to.eql('Оффер успешен');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-456\",\n  \"ruleName\": \"rule-2\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-456\",\n    \"source\": \"postman\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/beta/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "beta",
+                "request"
+              ]
+            },
+            "description": "Успешный запрос в среду исполнения beta со всеми обязательными полями."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ошибки",
+      "item": [
+        {
+          "name": "alpha — пустой ruleName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код VALIDATION_ERROR', function () {",
+                  "    pm.expect(response.state).to.eql('404');",
+                  "    pm.expect(response.code).to.eql('VALIDATION_ERROR');",
+                  "    pm.expect(response.details).to.eql('ruleName is empty');",
+                  "});",
+                  "",
+                  "pm.test('userId взят из запроса', function () {",
+                  "    pm.expect(response.userId).to.eql('user-123');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"ruleName\": \"\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "request"
+              ]
+            },
+            "description": "Пустой ruleName должен вернуть 404 VALIDATION_ERROR."
+          },
+          "response": []
+        },
+        {
+          "name": "beta — отсутствует ruleName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код VALIDATION_ERROR', function () {",
+                  "    pm.expect(response.state).to.eql('404');",
+                  "    pm.expect(response.code).to.eql('VALIDATION_ERROR');",
+                  "    pm.expect(response.details).to.eql('ruleName is empty');",
+                  "});",
+                  "",
+                  "pm.test('userId взят из запроса', function () {",
+                  "    pm.expect(response.userId).to.eql('user-123');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/beta/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "beta",
+                "request"
+              ]
+            },
+            "description": "Отсутствующий ruleName должен вернуть 404 VALIDATION_ERROR."
+          },
+          "response": []
+        },
+        {
+          "name": "несуществующий endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код NOT_FOUND', function () {",
+                  "    pm.expect(response.state).to.eql('404');",
+                  "    pm.expect(response.code).to.eql('NOT_FOUND');",
+                  "    pm.expect(response.details).to.eql('Endpoint not found');",
+                  "    pm.expect(response.path).to.eql('/alpha/wrong-endpoint');",
+                  "});",
+                  "",
+                  "pm.test('userId извлечён из тела', function () {",
+                  "    pm.expect(response.userId).to.eql('user-123');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"ruleName\": \"rule-1\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/wrong-endpoint",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "wrong-endpoint"
+              ]
+            },
+            "description": "Несуществующий путь должен вернуть 404 NOT_FOUND."
+          },
+          "response": []
+        },
+        {
+          "name": "корневой путь /",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код EMPTY_PATH', function () {",
+                  "    pm.expect(response.state).to.eql('404');",
+                  "    pm.expect(response.code).to.eql('EMPTY_PATH');",
+                  "    pm.expect(response.details).to.eql('Requested path is empty');",
+                  "    pm.expect(response.path).to.eql('');",
+                  "    pm.expect(response.userId).to.eql('unknown');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": []
+            },
+            "description": "Запрос на корень должен вернуть 404 EMPTY_PATH."
+          },
+          "response": []
+        },
+        {
+          "name": "alpha — отсутствует userId (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код BAD_REQUEST', function () {",
+                  "    pm.expect(response.state).to.eql('400');",
+                  "    pm.expect(response.code).to.eql('BAD_REQUEST');",
+                  "    pm.expect(response.details).to.eql('userId is required');",
+                  "});",
+                  "",
+                  "pm.test('userId в ответе', function () {",
+                  "    pm.expect(response.userId).to.eql('unknown');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ruleName\": \"rule-1\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "request"
+              ]
+            },
+            "description": "Отсутствие обязательного поля userId должно вернуть 400 BAD_REQUEST."
+          },
+          "response": []
+        },
+        {
+          "name": "alpha — отсутствует eventTs (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код BAD_REQUEST', function () {",
+                  "    pm.expect(response.state).to.eql('400');",
+                  "    pm.expect(response.code).to.eql('BAD_REQUEST');",
+                  "    pm.expect(response.details).to.eql('eventTs is required');",
+                  "});",
+                  "",
+                  "pm.test('userId в ответе', function () {",
+                  "    pm.expect(response.userId).to.eql('user-123');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"ruleName\": \"rule-1\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "request"
+              ]
+            },
+            "description": "Отсутствие обязательного поля eventTs должно вернуть 400 BAD_REQUEST."
+          },
+          "response": []
+        },
+        {
+          "name": "alpha — отсутствует triggerTs (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код BAD_REQUEST', function () {",
+                  "    pm.expect(response.state).to.eql('400');",
+                  "    pm.expect(response.code).to.eql('BAD_REQUEST');",
+                  "    pm.expect(response.details).to.eql('triggerTs is required');",
+                  "});",
+                  "",
+                  "pm.test('userId в ответе', function () {",
+                  "    pm.expect(response.userId).to.eql('user-123');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"ruleName\": \"rule-1\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"metadata\": {\n    \"userId\": \"user-123\",\n    \"source\": \"web\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "request"
+              ]
+            },
+            "description": "Отсутствие обязательного поля triggerTs должно вернуть 400 BAD_REQUEST."
+          },
+          "response": []
+        },
+        {
+          "name": "alpha — отсутствует metadata (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.test('Код BAD_REQUEST', function () {",
+                  "    pm.expect(response.state).to.eql('400');",
+                  "    pm.expect(response.code).to.eql('BAD_REQUEST');",
+                  "    pm.expect(response.details).to.eql('metadata is required');",
+                  "});",
+                  "",
+                  "pm.test('userId в ответе', function () {",
+                  "    pm.expect(response.userId).to.eql('user-123');",
+                  "});",
+                  "",
+                  "pm.test('traceId и timestamp присутствуют', function () {",
+                  "    pm.expect(response.traceId).to.match(/^trace-[a-f0-9]{8}$/);",
+                  "    pm.expect(response.timestamp).to.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user-123\",\n  \"ruleName\": \"rule-1\",\n  \"eventTs\": \"2025-01-01T10:00:00Z\",\n  \"triggerTs\": \"2025-01-01T10:05:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alpha/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alpha",
+                "request"
+              ]
+            },
+            "description": "Отсутствие обязательного поля metadata должно вернуть 400 BAD_REQUEST."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Документация",
+      "item": [
+        {
+          "name": "OpenAPI schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const schema = pm.response.json();",
+                  "",
+                  "pm.test('Описаны оба эндпоинта', function () {",
+                  "    pm.expect(schema.paths).to.have.property('/alpha/request');",
+                  "    pm.expect(schema.paths).to.have.property('/beta/request');",
+                  "});",
+                  "",
+                  "pm.test('Для эндпоинтов описаны ответы 200, 400 и 404, без 422', function () {",
+                  "    ['/alpha/request', '/beta/request'].forEach(function (path) {",
+                  "        pm.expect(schema.paths[path].post.responses).to.have.property('200');",
+                  "        pm.expect(schema.paths[path].post.responses).to.have.property('400');",
+                  "        pm.expect(schema.paths[path].post.responses).to.have.property('404');",
+                  "        pm.expect(schema.paths[path].post.responses).to.not.have.property('422');",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/openapi.json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "openapi.json"
+              ]
+            },
+            "description": "Проверка автоматически сгенерированной OpenAPI-схемы."
+          },
+          "response": []
+        },
+        {
+          "name": "Swagger UI",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Страница является HTML', function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include('text/html');",
+                  "});",
+                  "",
+                  "pm.test('Body содержит Swagger UI', function () {",
+                  "    pm.expect(pm.response.text()).to.include('swagger-ui');",
+                  "});",
+                  "",
+                  "pm.test('Swagger UI bundle подключён', function () {",
+                  "    pm.expect(pm.response.text()).to.include('SwaggerUIBundle');",
+                  "});",
+                  "",
+                  "pm.test('Страница ссылается на OpenAPI-схему', function () {",
+                  "    pm.expect(pm.response.text()).to.include('/openapi.json');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/docs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "docs"
+              ]
+            },
+            "description": "Проверяет, что Swagger UI отдаёт HTML-страницу с подключённым SwaggerUIBundle и ссылкой на /openapi.json."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    }
+  ]
+}

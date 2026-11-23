@@ -1,0 +1,25 @@
+# macOS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node / Vite
+node_modules/
+dist/
+coverage/
+*.log
+
+# Review bundle (передаётся отдельным файлом, не коммитится)
+*.bundle
